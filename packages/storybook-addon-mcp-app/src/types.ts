@@ -7,6 +7,7 @@ export type McpAppToolInputPayload = {
 }
 
 export type McpAppToolResultPayload = {
+  content?: Array<Record<string, unknown>>
   structuredContent?: Record<string, unknown>
 }
 
@@ -21,6 +22,7 @@ export type McpAppMockParameters = {
   cancelled?: McpAppToolCancelledPayload
   appErrorMessage?: string
   hostContext?: Record<string, unknown>
+  hostCapabilities?: Record<string, unknown>
 }
 
 export type ResolvedMcpAppMockState = {
@@ -32,4 +34,5 @@ export type ResolvedMcpAppMockState = {
   cancelled: McpAppToolCancelledPayload
   appErrorMessage?: string
   hostContext?: Record<string, unknown>
+  hostCapabilities?: Record<string, unknown>
 }
