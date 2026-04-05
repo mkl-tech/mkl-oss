@@ -96,24 +96,7 @@ export default config
 
 The important part is the alias: it replaces the real MCP React runtime with the mocked Storybook runtime for stories only.
 
-### 2. Register the preview decorator
-
-In `.storybook/preview.ts`:
-
-```ts
-import type { Preview } from '@storybook/react-vite'
-
-import { mcpAppMockGlobalTypes, withMcpAppMock } from '@mkl-oss/storybook-addon-mcp-app/preview'
-
-const preview: Preview = {
-  decorators: [withMcpAppMock],
-  globalTypes: mcpAppMockGlobalTypes,
-}
-
-export default preview
-```
-
-If your UI needs package CSS, import it in this file as usual.
+The addon preset automatically registers the manager panel and preview annotations. You only need to import `@mkl-oss/storybook-addon-mcp-app/preview` manually if you want to compose or override the preview configuration yourself.
 
 ## Writing Stories
 
