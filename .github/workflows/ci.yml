@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - feat/**
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  storybook-addon:
+    name: Storybook addon checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.20.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run package tests
+        run: pnpm --filter @mkl-oss/storybook-addon-mcp-app test
+
+      - name: Run package validation
+        run: pnpm --filter @mkl-oss/storybook-addon-mcp-app validate
+
+  upstream-contract:
+    name: Upstream ext-apps contract
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.20.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Clone ext-apps main
+        run: git clone --depth 1 https://github.com/modelcontextprotocol/ext-apps.git /tmp/ext-apps-inspect
+
+      - name: Run upstream contract test
+        env:
+          EXT_APPS_REPO_DIR: /tmp/ext-apps-inspect
+        run: pnpm --filter @mkl-oss/storybook-addon-mcp-app test:upstream
