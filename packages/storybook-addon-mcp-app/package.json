@@ -74,19 +74,26 @@
     "storybook": "^10.0.7"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "16.3.0",
+    "@testing-library/user-event": "14.6.1",
     "@modelcontextprotocol/ext-apps": "1.3.1",
     "@storybook/react": "10.0.7",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
+    "jsdom": "27.0.0",
     "react": "19.2.1",
     "react-dom": "19.2.1",
     "storybook": "10.0.7",
-    "typescript": "catalog:"
-  }
-,
+    "typescript": "catalog:",
+    "vitest": "3.2.4"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "lint": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --exclude test/upstream-contract.test.ts",
+    "test:upstream": "vitest run test/upstream-contract.test.ts",
+    "test:watch": "vitest",
     "validate": "pnpm lint && pnpm build"
   }
 }

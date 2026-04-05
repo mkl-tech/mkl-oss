@@ -9,11 +9,21 @@ class MockMcpApp {
   ontoolresult?: (params: unknown) => void
   ontoolcancelled?: (params: unknown) => void
   onhostcontextchanged?: (params: unknown) => void
+  onerror?: (params: unknown) => void
+  onteardown?: () => Promise<unknown>
 
   private hostContext?: Record<string, unknown>
+  private hostCapabilities?: Record<string, unknown>
+  private getState: () => ResolvedMcpAppMockState
 
-  constructor(hostContext?: Record<string, unknown>) {
+  constructor(
+    getState: () => ResolvedMcpAppMockState,
+    hostContext?: Record<string, unknown>,
+    hostCapabilities?: Record<string, unknown>,
+  ) {
+    this.getState = getState
     this.hostContext = hostContext
+    this.hostCapabilities = hostCapabilities
   }
 
   getHostContext() {
@@ -28,6 +38,14 @@ class MockMcpApp {
     }
   }
 
+  getHostCapabilities() {
+    return this.hostCapabilities
+  }
+
+  setHostCapabilities(hostCapabilities?: Record<string, unknown>) {
+    this.hostCapabilities = hostCapabilities
+  }
+
   emitToolInput(params: unknown) {
     this.ontoolinput?.(params)
   }
@@ -38,6 +56,26 @@ class MockMcpApp {
 
   emitToolCancelled(params: unknown) {
     this.ontoolcancelled?.(params)
+  }
+
+  async callServerTool() {
+    return this.getState().result
+  }
+
+  async sendMessage() {
+    return { isError: false }
+  }
+
+  async sendLog() {
+    return { isError: false }
+  }
+
+  async openLink() {
+    return { isError: false }
+  }
+
+  async downloadFile() {
+    return { isError: false }
   }
 }
 
@@ -118,8 +156,9 @@ export function McpAppMockProvider({
   useEffect(() => {
     for (const app of appsRef.current) {
       app.setHostContext(state.hostContext)
+      app.setHostCapabilities(state.hostCapabilities)
     }
-  }, [state.hostContext])
+  }, [state.hostCapabilities, state.hostContext])
 
   useEffect(() => {
     for (const app of appsRef.current) {
@@ -167,7 +206,11 @@ export function useMockedMcpAppState(): {
   const registerRef = useRef<() => () => void>(() => () => {})
 
   if (!appRef.current) {
-    appRef.current = new MockMcpApp(context.state.hostContext)
+    appRef.current = new MockMcpApp(
+      () => context.state,
+      context.state.hostContext,
+      context.state.hostCapabilities,
+    )
   }
 
   registerRef.current = () => context.registerApp(appRef.current!)

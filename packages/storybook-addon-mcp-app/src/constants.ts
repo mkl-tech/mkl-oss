@@ -1,4 +1,4 @@
-export const ADDON_ID = '@mkl/storybook-addon-mcp-app'
+export const ADDON_ID = '@mkl-oss/storybook-addon-mcp-app'
 export const PANEL_ID = `${ADDON_ID}/panel`
 export const PARAM_KEY = 'mcpAppMock'
 

@@ -25,21 +25,14 @@ const DEFAULT_INPUT: McpAppToolInputPayload = {
 }
 
 const DEFAULT_RESULT: McpAppToolResultPayload = {
+  content: [
+    {
+      type: 'text',
+      text: '2026-04-03T08:00:00.000Z',
+    },
+  ],
   structuredContent: {
-    fetchedAt: '2026-04-01T09:00:00.000Z',
-    total: 2,
-    slots: [
-      {
-        id: 'slot-1',
-        startAt: '2026-04-03T08:00:00.000Z',
-        duration: 60,
-      },
-      {
-        id: 'slot-2',
-        startAt: '2026-04-04T12:30:00.000Z',
-        duration: 45,
-      },
-    ],
+    time: '2026-04-03T08:00:00.000Z',
   },
 }
 
@@ -102,6 +95,7 @@ export function createMcpAppScenario(
     cancelled: parameters.cancelled ?? DEFAULT_CANCELLED,
     appErrorMessage: parameters.appErrorMessage,
     hostContext: parameters.hostContext,
+    hostCapabilities: parameters.hostCapabilities,
   }
 }
 
@@ -122,6 +116,7 @@ export function normalizeParameters(parameters?: McpAppMockParameters): McpAppMo
         ? parameters?.appErrorMessage ?? DEFAULT_ERROR_MESSAGE
         : parameters?.appErrorMessage,
     hostContext: parameters?.hostContext,
+    hostCapabilities: parameters?.hostCapabilities,
   }
 }
 
@@ -190,6 +185,7 @@ export function resolveMcpAppMockState(
     cancelled,
     appErrorMessage,
     hostContext: normalized.hostContext,
+    hostCapabilities: normalized.hostCapabilities,
   }
 }
 

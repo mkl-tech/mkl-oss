@@ -34,6 +34,8 @@ This package is designed to be used alongside:
 
 Compatibility with earlier Storybook major versions is not claimed until it is explicitly tested.
 
+Test suite documentation: [test/README.md](./test/README.md)
+
 ## Usage
 
 This package is designed for React UIs that depend on `@modelcontextprotocol/ext-apps/react`, especially components using:
