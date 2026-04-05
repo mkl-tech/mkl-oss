@@ -1,0 +1,24 @@
+{
+  "name": "mkl-oss",
+  "version": "1.0.0",
+  "description": "Open source pnpm workspace for packages maintained by the MKL Avocat engineering team 🛠️",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkl-tech/mkl-oss.git"
+  },
+  "homepage": "https://github.com/mkl-tech/mkl-oss",
+  "bugs": {
+    "url": "https://github.com/mkl-tech/mkl-oss/issues"
+  },
+  "scripts": {
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "validate": "pnpm -r validate"
+  },
+  "license": "ISC",
+  "packageManager": "pnpm@10.20.0",
+  "devDependencies": {
+    "typescript": "catalog:"
+  }
+}
